@@ -194,7 +194,7 @@ html, body {
     <div class="card problema">
       <div class="card-tag rojo">El problema</div>
       <div class="card-item" id="dolor-item-1"><span class="ico">✗</span><span class="txt rojo">Los clientes preguntan constantemente si ya está listo</span></div>
-      <div class="card-item"><span class="ico">✗</span><span class="txt rojo">El empleado para lo que hace para responder</span></div>
+      <div class="card-item"><span class="ico">✗</span><span class="txt rojo">El empleado deja de atender para responder</span></div>
       <div class="card-item"><span class="ico">✗</span><span class="txt rojo">El cliente no sabe cuándo volver</span></div>
       <div class="card-item"><span class="ico">✗</span><span class="txt rojo">Hay que llamar uno por uno</span></div>
     </div>
@@ -331,21 +331,41 @@ html, body {
     <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
     <div><div class="hd-titulo">Turnera</div><div class="hd-sub">Aviso de pedido listo</div></div>
   </div>
-  <div class="final-bd">
+  <div class="bd">
     <div class="final-check">
       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
     <div class="final-titulo">Menos interrupciones.<br>Clientes informados.<br>Entregas ordenadas.</div>
-    <div class="final-sub">Sin cambiar cómo trabajás.<br>Sin instalar nada extra.</div>
-    <div class="pregunta">Si lo probamos 15 días en tu negocio sin costo, ¿lo harías?</div>
-    <div class="pregunta2">¿Qué cambiarías para que realmente te sirva acá?</div>
+    <div style="height:16px"></div>
+    <div class="pregunta">¿Qué cambiarías para que realmente te sirva acá?</div>
+    <textarea id="txt-respuesta" placeholder="Escribí acá..." style="width:100%;border:1.5px solid #e2e2e0;border-radius:14px;padding:16px;font-size:17px;font-family:-apple-system,sans-serif;min-height:90px;margin-bottom:12px;background:#fff;color:#0f0f0f;resize:none;"></textarea>
+  </div>
+  <div class="ft">
+    <button class="btn-sig" onclick="enviar('Sí, me interesa')">Sí, quiero probarlo 15 días →</button>
+    <button class="btn-vol" onclick="enviar('Necesito más información')">Necesito más información</button>
     <button class="btn-reiniciar" onclick="ir('s0')">Ver de nuevo</button>
+  </div>
+</div>
+
+<!-- GRACIAS -->
+<div class="screen" id="s8">
+  <div class="hd">
+    <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <div><div class="hd-titulo">Turnera</div><div class="hd-sub">Aviso de pedido listo</div></div>
+  </div>
+  <div class="final-bd" style="text-align:center;">
+    <div style="font-size:56px;margin-bottom:20px;">🙌</div>
+    <div class="final-titulo">¡Gracias!</div>
+    <div class="final-sub">Tu respuesta quedó guardada.<br>Leonardo te contacta en las próximas horas.</div>
+    <div style="background:#E8F7F2;border-radius:16px;padding:20px;margin-top:24px;">
+      <div style="font-size:15px;color:#085041;line-height:1.6;">turnera-digital.web.app<br>lcostucica@gmail.com<br>011 6731 3343</div>
+    </div>
   </div>
 </div>
 
 <script>
 var dolores = {
-  pregunta: "Los clientes preguntan si ya está listo. El empleado para lo que hace para responder. Y vuelve a empezar.",
+  pregunta: "Los clientes preguntan si ya está listo. El empleado deja de atender para responder. Y vuelve a empezar.",
   llama: "Hay que llamar a cada cliente por teléfono para avisarle. Es tiempo que se gasta en cada pedido, todo el día.",
   nombre: "Se llama por nombre y a veces hay confusiones — nombres repetidos, clientes que no escuchan.",
   retira: "El cliente no sabe cuándo venir a retirar. Viene antes de que esté o viene tarde."
