@@ -364,44 +364,101 @@ html, body {
 </div>
 
 <script>
+var _nombre = "", _tipo = "", _tipoLabel = "", _dolorLabel = "";
+var FORM = "https://docs.google.com/forms/d/e/1FAIpQLSeqohc-w0za30JZAhlXl3k0APCoSYAr3A5zV7FhrptIndRm1A/formResponse";
+var WA   = "5491167313343";
+
 var dolores = {
+  pregunta: "Los clientes preguntan constantemente",
+  llama:    "Hay que llamar por teléfono",
+  nombre:   "Se llama por nombre y hay confusiones",
+  retira:   "No saben cuándo venir a retirar"
+};
+
+var doloresTexto = {
   pregunta: "Los clientes preguntan si ya está listo. El empleado deja de atender para responder. Y vuelve a empezar.",
-  llama: "Hay que llamar a cada cliente por teléfono para avisarle. Es tiempo que se gasta en cada pedido, todo el día.",
-  nombre: "Se llama por nombre y a veces hay confusiones — nombres repetidos, clientes que no escuchan.",
-  retira: "El cliente no sabe cuándo venir a retirar. Viene antes de que esté o viene tarde."
+  llama:    "Hay que llamar a cada cliente por teléfono para avisarle. Es tiempo que se gasta en cada pedido, todo el día.",
+  nombre:   "Se llama por nombre y a veces hay confusiones — nombres repetidos, clientes que no escuchan.",
+  retira:   "El cliente no sabe cuándo venir a retirar. Viene antes de que esté o viene tarde."
 };
 
 var emocionales = {
-  pregunta: "Tu cliente ya pidió.\nEstá esperando.\n\nNo sabe cuándo estará listo.\n\nY te pregunta.",
-  llama: "Tu cliente ya pidió.\nEstá esperando.\n\nVos tenés que llamarlo\npor teléfono\npara avisarle.",
-  nombre: "Tu cliente ya pidió.\nEstá esperando.\n\nLo llamás por nombre.\nNo escucha.\nY el pedido queda ahí.",
-  retira: "Tu cliente ya pidió.\nEstá esperando.\n\nNo sabe cuándo volver.\nViene antes.\nO viene tarde."
+  pregunta: "Tu cliente ya pidió.
+Está esperando.
+
+No sabe cuándo estará listo.
+
+Y te pregunta.",
+  llama:    "Tu cliente ya pidió.
+Está esperando.
+
+Vos tenés que llamarlo
+por teléfono
+para avisarle.",
+  nombre:   "Tu cliente ya pidió.
+Está esperando.
+
+Lo llamás por nombre.
+No escucha.
+Y el pedido queda ahí.",
+  retira:   "Tu cliente ya pidió.
+Está esperando.
+
+No sabe cuándo volver.
+Viene antes.
+O viene tarde."
 };
 
 function iniciar() {
-  var nombre = document.getElementById('inp-nombre').value.trim() || 'Tu negocio';
+  _nombre    = document.getElementById('inp-nombre').value.trim() || 'Tu negocio';
   var zona   = document.getElementById('inp-zona').value.trim();
   var dolor  = document.getElementById('sel-dolor').value;
-  var local  = nombre + (zona ? ' · ' + zona : '');
+  _dolorLabel = dolores[dolor];
+  _tipo      = "Aviso pedido listo";
+  var local  = _nombre + (zona ? ' · ' + zona : '');
 
   ['local-2','local-3','local-4','local-6'].forEach(function(id){
     document.getElementById(id).textContent = local;
   });
 
-  // Pantalla negra adaptada
   var txt = document.getElementById('txt-emocional');
-  var lineas = emocionales[dolor].split('\n');
+  var lineas = emocionales[dolor].split('
+');
   txt.innerHTML = lineas.map(function(l, i) {
     if (l === '') return '<br>';
     var last = (i === lineas.length - 1) || (i === lineas.length - 2 && lineas[lineas.length-1] === '');
     return last ? '<strong>' + l + '</strong>' : l + '<br>';
   }).join('');
 
-  // Primer ítem del problema adaptado
   document.getElementById('dolor-item-1').innerHTML =
-    '<span class="ico">✗</span><span class="txt rojo">' + dolores[dolor] + '</span>';
+    '<span class="ico">✗</span><span class="txt rojo">' + doloresTexto[dolor] + '</span>';
 
   ir('s1');
+}
+
+function enviar(quiere) {
+  var respuesta = document.getElementById('txt-respuesta').value.trim() || "(sin comentario)";
+
+  // 1. Guardar en Google Form (silencioso)
+  var params = new URLSearchParams({
+    "entry.333432293": _nombre,
+    "entry.97779645":  "Otro",
+    "entry.891579392": _dolorLabel,
+    "entry.2098720063": respuesta,
+    "entry.1810345489": quiere
+  });
+  var img = new Image();
+  img.src = FORM + "?" + params.toString();
+
+  // 2. Abrir WhatsApp
+  var msg = "Hola Leonardo! Vi la demo de Turnera (Aviso pedido listo).%0A%0A"
+    + "*Negocio:* " + encodeURIComponent(_nombre) + "%0A"
+    + "*Problema:* " + encodeURIComponent(_dolorLabel) + "%0A"
+    + "*Qué cambiaría:* " + encodeURIComponent(respuesta) + "%0A"
+    + "*Piloto:* " + encodeURIComponent(quiere);
+  window.open("https://wa.me/" + WA + "?text=" + msg, "_blank");
+
+  ir('s8');
 }
 
 function ir(id) {
