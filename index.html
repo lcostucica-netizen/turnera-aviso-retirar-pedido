@@ -5,154 +5,95 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Turnera</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-:root {
-  --azul: #085041; --azul-mid: #0F6E56; --azul-lt: #E8F7F2;
-  --verde: #1D9E75; --verde-mid: #6EE7B7;
-  --negro: #0f0f0f; --gris1: #444; --gris2: #888; --gris3: #f0f0ee;
-  --borde: #e2e2e0; --rojo-lt: #fef2f2; --rojo: #dc2626;
-  --amber: #EF9F27; --amber-lt: #FAEEDA; --amber-dk: #854F0B;
-}
-html, body {
-  height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #fafaf8;
-  color: var(--negro);
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
-}
-.screen {
-  display: none;
-  height: 100vh;
-  height: -webkit-fill-available;
-  flex-direction: column;
-  overflow: hidden;
-}
-.screen.active { display: flex; }
-
-/* HEADER */
-.hd { padding: 12px 18px 10px; background: #fff; border-bottom: 1px solid var(--borde); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.hd-logo { width: 34px; height: 34px; background: var(--azul); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.hd-logo svg { width: 20px; height: 20px; }
-.hd-titulo { font-size: 16px; font-weight: 700; color: var(--negro); }
-.hd-sub { font-size: 12px; color: var(--gris2); margin-top: 1px; }
-.hd-paso { font-size: 11px; color: var(--gris2); background: var(--gris3); padding: 3px 9px; border-radius: 20px; white-space: nowrap; margin-left: auto; }
-
-/* BODY */
-.bd { flex: 1; padding: 18px 18px 8px; overflow-y: auto; }
-
-/* TIPOGRAFÍA */
-.titulo { font-size: 22px; font-weight: 700; color: var(--negro); line-height: 1.25; margin-bottom: 14px; }
-.subtitulo { font-size: 16px; color: var(--gris1); line-height: 1.55; margin-bottom: 16px; }
-
-/* CARDS */
-.card { border-radius: 16px; padding: 18px; margin-bottom: 12px; }
-.card.problema { background: var(--rojo-lt); border: 1px solid #fecaca; }
-.card.solucion { background: var(--azul-lt); border: 1px solid #a7f3d0; }
-.card.neutro { background: var(--gris3); border: 1px solid var(--borde); }
-.card-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
-.card-tag.rojo { color: var(--rojo); }
-.card-tag.azul { color: var(--azul); }
-.card-tag.gris { color: var(--gris2); }
-.card-item { font-size: 17px; line-height: 1.5; margin-bottom: 10px; display: flex; gap: 10px; align-items: flex-start; }
-.card-item:last-child { margin-bottom: 0; }
-.card-item .ico { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
-.card-item .txt.rojo { color: #7f1d1d; }
-.card-item .txt.azul { color: var(--azul); }
-.card-item .txt.negro { color: var(--negro); }
-
-/* PANTALLA NEGRA */
-.emocional { flex: 1; background: var(--negro); display: flex; flex-direction: column; justify-content: center; padding: 32px 24px; overflow: hidden; }
-.emocional-txt { font-size: 24px; color: #fff; line-height: 1.6; }
-.emocional-txt strong { color: var(--verde-mid); }
-.emocional-footer { background: var(--negro); padding: 14px 18px 32px; flex-shrink: 0; }
-
-/* TICKET */
-.ticket { border: 2px dashed var(--borde); border-radius: 18px; padding: 22px; text-align: center; margin-bottom: 14px; }
-.ticket-num { font-size: 64px; font-weight: 800; color: var(--negro); line-height: 1; letter-spacing: -2px; }
-.ticket-lbl { font-size: 13px; color: var(--gris2); margin-top: 6px; }
-
-/* ESTADO */
-.estado { border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
-.estado.preparando { background: var(--amber-lt); }
-.estado.listo { background: var(--azul-lt); }
-.estado-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.estado-dot.amber { background: var(--amber); }
-.estado-dot.verde { background: var(--verde); }
-.estado-titulo { font-size: 16px; font-weight: 600; }
-.estado-titulo.amber { color: var(--amber-dk); }
-.estado-titulo.verde { color: var(--azul); }
-.estado-sub { font-size: 13px; margin-top: 2px; }
-.estado-sub.amber { color: var(--amber-dk); opacity: 0.8; }
-.estado-sub.verde { color: var(--azul-mid); }
-
-/* ETA */
-.eta { background: var(--azul-lt); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
-.eta-lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--azul); margin-bottom: 6px; }
-.eta-val { font-size: 28px; font-weight: 700; color: var(--azul); }
-.eta-aprox { font-size: 12px; color: var(--azul-mid); margin-top: 3px; }
-.eta-nota { font-size: 14px; color: var(--azul-mid); margin-top: 8px; line-height: 1.4; }
-
-/* AVISO LISTO */
-.aviso { background: var(--azul-lt); border: 1.5px solid var(--verde-mid); border-radius: 18px; padding: 24px 18px; text-align: center; margin-bottom: 12px; }
-.aviso-icon { font-size: 40px; margin-bottom: 10px; }
-.aviso-titulo { font-size: 22px; font-weight: 700; color: var(--azul); margin-bottom: 8px; }
-.aviso-sub { font-size: 16px; color: var(--azul-mid); line-height: 1.5; }
-.aviso-btn { width: 100%; background: var(--verde); color: #fff; border: none; border-radius: 12px; padding: 14px; font-size: 16px; font-weight: 600; margin-top: 16px; }
-
-/* PANEL NEGOCIO */
-.panel-fila { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1px solid var(--borde); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
-.panel-num { font-size: 17px; font-weight: 700; color: var(--negro); }
-.panel-info { font-size: 12px; color: var(--gris2); margin-top: 3px; }
-.badge { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
-.badge.preparando { background: var(--amber-lt); color: var(--amber-dk); }
-.badge.listo { background: var(--azul-lt); color: var(--azul); }
-.badge.entregado { background: var(--gris3); color: var(--gris2); }
-.panel-btn { width: 100%; background: var(--azul); color: #fff; border: none; border-radius: 12px; padding: 14px; font-size: 16px; font-weight: 600; margin-top: 4px; }
-
-/* PILL */
-.pill { display: flex; align-items: flex-start; gap: 10px; background: #fff; border: 1px solid var(--borde); border-radius: 12px; padding: 13px 15px; margin-bottom: 10px; }
-.pill-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--verde); flex-shrink: 0; margin-top: 4px; }
-.pill-txt { font-size: 15px; color: var(--gris1); line-height: 1.5; }
-
-/* FOOTER */
-.ft { padding: 10px 18px 28px; background: #fafaf8; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
-.btn-sig { width: 100%; background: var(--azul); color: #fff; border: none; border-radius: 14px; padding: 18px; font-size: 18px; font-weight: 700; cursor: pointer; }
-.btn-sig:active { opacity: 0.85; }
-.btn-vol { width: 100%; background: transparent; color: var(--gris2); border: 1px solid var(--borde); border-radius: 14px; padding: 14px; font-size: 16px; cursor: pointer; }
-
-/* SETUP */
-.setup-bd { flex: 1; padding: 24px 18px; overflow-y: auto; }
-.setup-lbl { font-size: 14px; font-weight: 600; color: var(--gris1); margin-bottom: 8px; }
-.setup-inp { width: 100%; border: 1.5px solid var(--borde); border-radius: 12px; padding: 16px; font-size: 18px; background: #fff; color: var(--negro); margin-bottom: 18px; }
-.setup-inp:focus { outline: none; border-color: var(--azul); }
-.setup-sel { width: 100%; border: 1.5px solid var(--borde); border-radius: 12px; padding: 16px; font-size: 17px; background: #fff; color: var(--negro); margin-bottom: 8px; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
-
-/* FINAL */
-.final-bd { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 24px 18px; overflow-y: auto; }
-.final-check { width: 68px; height: 68px; background: var(--azul-lt); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
-.final-titulo { font-size: 26px; font-weight: 800; color: var(--negro); line-height: 1.2; text-align: center; margin-bottom: 12px; }
-.final-sub { font-size: 16px; color: var(--gris1); line-height: 1.6; text-align: center; margin-bottom: 24px; }
-.pregunta { background: var(--azul-lt); border-radius: 16px; padding: 20px; font-size: 19px; font-weight: 600; color: var(--azul); line-height: 1.5; text-align: center; margin-bottom: 12px; }
-.pregunta2 { background: var(--gris3); border-radius: 16px; padding: 18px; font-size: 17px; color: var(--negro); line-height: 1.5; text-align: center; margin-bottom: 24px; }
-.btn-reiniciar { width: 100%; background: var(--gris3); border: none; border-radius: 14px; padding: 16px; font-size: 16px; color: var(--gris2); cursor: pointer; }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--azul:#085041;--azul-mid:#0F6E56;--azul-lt:#E8F7F2;--verde:#1D9E75;--verde-mid:#6EE7B7;--negro:#0f0f0f;--gris1:#444;--gris2:#888;--gris3:#f0f0ee;--borde:#e2e2e0;--rojo-lt:#fef2f2;--rojo:#dc2626;--amber:#EF9F27;--amber-lt:#FAEEDA;--amber-dk:#854F0B}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fafaf8;color:var(--negro);-webkit-font-smoothing:antialiased;overflow:hidden}
+.screen{display:none;height:100vh;height:-webkit-fill-available;flex-direction:column;overflow:hidden}
+.screen.active{display:flex}
+.hd{padding:12px 18px 10px;background:#fff;border-bottom:1px solid var(--borde);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.hd-logo{width:34px;height:34px;background:var(--azul);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hd-logo svg{width:20px;height:20px}
+.hd-titulo{font-size:16px;font-weight:700;color:var(--negro)}
+.hd-sub{font-size:12px;color:var(--gris2);margin-top:1px}
+.hd-paso{font-size:11px;color:var(--gris2);background:var(--gris3);padding:3px 9px;border-radius:20px;white-space:nowrap;margin-left:auto}
+.bd{flex:1;padding:18px 18px 8px;overflow-y:auto}
+.titulo{font-size:22px;font-weight:700;color:var(--negro);line-height:1.25;margin-bottom:14px}
+.subtitulo{font-size:16px;color:var(--gris1);line-height:1.55;margin-bottom:16px}
+.card{border-radius:16px;padding:18px;margin-bottom:12px}
+.card.problema{background:var(--rojo-lt);border:1px solid #fecaca}
+.card.solucion{background:var(--azul-lt);border:1px solid #a7f3d0}
+.card.neutro{background:var(--gris3);border:1px solid var(--borde)}
+.card-tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}
+.card-tag.rojo{color:var(--rojo)}.card-tag.azul{color:var(--azul)}.card-tag.gris{color:var(--gris2)}
+.card-item{font-size:17px;line-height:1.5;margin-bottom:10px;display:flex;gap:10px;align-items:flex-start}
+.card-item:last-child{margin-bottom:0}
+.card-item .ico{font-size:17px;flex-shrink:0;margin-top:1px}
+.card-item .txt.rojo{color:#7f1d1d}.card-item .txt.azul{color:var(--azul)}.card-item .txt.negro{color:var(--negro)}
+.emocional{flex:1;background:var(--negro);display:flex;flex-direction:column;justify-content:center;padding:32px 24px;overflow:hidden}
+.emocional-txt{font-size:24px;color:#fff;line-height:1.6}
+.emocional-txt strong{color:var(--verde-mid)}
+.emocional-footer{background:var(--negro);padding:14px 18px 32px;flex-shrink:0}
+.ticket{border:2px dashed var(--borde);border-radius:18px;padding:22px;text-align:center;margin-bottom:14px}
+.ticket-num{font-size:64px;font-weight:800;color:var(--negro);line-height:1;letter-spacing:-2px}
+.ticket-lbl{font-size:13px;color:var(--gris2);margin-top:6px}
+.estado{border-radius:14px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.estado.preparando{background:var(--amber-lt)}
+.estado-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.estado-dot.amber{background:var(--amber)}
+.estado-titulo{font-size:16px;font-weight:600}
+.estado-titulo.amber{color:var(--amber-dk)}
+.estado-sub{font-size:13px;margin-top:2px}
+.estado-sub.amber{color:var(--amber-dk);opacity:.8}
+.eta{background:var(--azul-lt);border-radius:14px;padding:16px;margin-bottom:12px}
+.eta-lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--azul);margin-bottom:6px}
+.eta-val{font-size:28px;font-weight:700;color:var(--azul)}
+.eta-aprox{font-size:12px;color:var(--azul-mid);margin-top:3px}
+.eta-nota{font-size:14px;color:var(--azul-mid);margin-top:8px;line-height:1.4}
+.aviso{background:var(--azul-lt);border:1.5px solid var(--verde-mid);border-radius:18px;padding:24px 18px;text-align:center;margin-bottom:12px}
+.aviso-icon{font-size:40px;margin-bottom:10px}
+.aviso-titulo{font-size:22px;font-weight:700;color:var(--azul);margin-bottom:8px}
+.aviso-sub{font-size:16px;color:var(--azul-mid);line-height:1.5}
+.aviso-btn{width:100%;background:var(--verde);color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:600;margin-top:16px}
+.panel-fila{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--borde);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.panel-num{font-size:17px;font-weight:700;color:var(--negro)}
+.panel-info{font-size:12px;color:var(--gris2);margin-top:3px}
+.badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px}
+.badge.preparando{background:var(--amber-lt);color:var(--amber-dk)}
+.badge.listo{background:var(--azul-lt);color:var(--azul)}
+.badge.entregado{background:var(--gris3);color:var(--gris2)}
+.panel-btn{width:100%;background:var(--azul);color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:600;margin-top:4px}
+.pill{display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--borde);border-radius:12px;padding:13px 15px;margin-bottom:10px}
+.pill-dot{width:9px;height:9px;border-radius:50%;background:var(--verde);flex-shrink:0;margin-top:4px}
+.pill-txt{font-size:15px;color:var(--gris1);line-height:1.5}
+.ft{padding:10px 18px 28px;background:#fafaf8;display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.btn-sig{width:100%;background:var(--azul);color:#fff;border:none;border-radius:14px;padding:18px;font-size:18px;font-weight:700;cursor:pointer}
+.btn-sig:active{opacity:.85}
+.btn-vol{width:100%;background:transparent;color:var(--gris2);border:1px solid var(--borde);border-radius:14px;padding:14px;font-size:16px;cursor:pointer}
+.setup-bd{flex:1;padding:24px 18px;overflow-y:auto}
+.setup-lbl{font-size:14px;font-weight:600;color:var(--gris1);margin-bottom:8px}
+.setup-inp{width:100%;border:1.5px solid var(--borde);border-radius:12px;padding:16px;font-size:18px;background:#fff;color:var(--negro);margin-bottom:18px}
+.setup-inp:focus{outline:none;border-color:var(--azul)}
+.setup-sel{width:100%;border:1.5px solid var(--borde);border-radius:12px;padding:16px;font-size:17px;background:#fff;color:var(--negro);margin-bottom:8px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.final-bd{flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 18px;overflow-y:auto}
+.final-check{width:68px;height:68px;background:var(--azul-lt);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.final-titulo{font-size:26px;font-weight:800;color:var(--negro);line-height:1.2;text-align:center;margin-bottom:12px}
+.final-sub{font-size:16px;color:var(--gris1);line-height:1.6;text-align:center;margin-bottom:20px}
+.pregunta{background:var(--azul-lt);border-radius:16px;padding:18px;font-size:18px;font-weight:600;color:var(--azul);line-height:1.5;text-align:center;margin-bottom:14px}
+textarea.respuesta{width:100%;border:1.5px solid var(--borde);border-radius:14px;padding:16px;font-size:17px;font-family:-apple-system,sans-serif;min-height:90px;margin-bottom:12px;background:#fff;color:var(--negro);resize:none}
+.btn-reiniciar{width:100%;background:var(--gris3);border:none;border-radius:14px;padding:14px;font-size:15px;color:var(--gris2);cursor:pointer}
 </style>
 </head>
 <body>
 
-<!-- SETUP -->
 <div class="screen active" id="s0">
-  <div class="hd">
-    <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
-    <div><div class="hd-titulo">Turnera</div><div class="hd-sub">Demo</div></div>
-  </div>
+  <div class="hd"><div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div><div><div class="hd-titulo">Turnera</div><div class="hd-sub">Demo</div></div></div>
   <div class="setup-bd">
     <div class="titulo" style="margin-bottom:6px;">Antes de empezar</div>
     <div class="subtitulo">Escribí el nombre del negocio para personalizar la demo.</div>
     <div class="setup-lbl">Nombre del negocio</div>
-    <input class="setup-inp" id="inp-nombre" type="text" placeholder="Ej: Açaí Brasil" autocomplete="off" />
+    <input class="setup-inp" id="inp-nombre" type="text" placeholder="Ej: Açaí Brasil" autocomplete="off"/>
     <div class="setup-lbl">Barrio o zona</div>
-    <input class="setup-inp" id="inp-zona" type="text" placeholder="Ej: Caballito, Flores..." autocomplete="off" />
+    <input class="setup-inp" id="inp-zona" type="text" placeholder="Ej: Caballito, Flores..." autocomplete="off"/>
     <div class="setup-lbl">¿Cuál es el dolor principal?</div>
     <select class="setup-sel" id="sel-dolor">
       <option value="pregunta">Los clientes preguntan si ya está listo</option>
@@ -161,185 +102,100 @@ html, body {
       <option value="retira">No saben cuándo venir a retirar</option>
     </select>
   </div>
-  <div class="ft">
-    <button class="btn-sig" onclick="iniciar()">Empezar →</button>
-  </div>
+  <div class="ft"><button class="btn-sig" onclick="iniciar()">Empezar →</button></div>
 </div>
 
-<!-- PANTALLA NEGRA -->
 <div class="screen" id="s1">
-  <div class="emocional">
-    <div class="emocional-txt" id="txt-emocional">
-      Tu cliente ya pidió.<br>
-      Está esperando.<br><br>
-      No sabe cuándo estará listo.<br><br>
-      Y te pregunta.<br>
-      <strong>Y vos parás de trabajar<br>para responder.</strong>
-    </div>
-  </div>
-  <div class="emocional-footer">
-    <button class="btn-sig" onclick="ir('s2')">Ver qué cambia →</button>
-  </div>
+  <div class="emocional"><div class="emocional-txt" id="txt-emocional">Tu cliente ya pidió.<br>Está esperando.<br><br>No sabe cuándo estará listo.<br><br>Y te pregunta.<br><strong>Y vos parás de trabajar para responder.</strong></div></div>
+  <div class="emocional-footer"><button class="btn-sig" onclick="ir('s2')">Ver qué cambia →</button></div>
 </div>
 
-<!-- HOY -->
 <div class="screen" id="s2">
-  <div class="hd">
-    <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-    <div><div class="hd-titulo">Turnera</div><div class="hd-sub" id="local-2">Aviso de pedido listo</div></div>
-    <div class="hd-paso">1 de 5</div>
-  </div>
+  <div class="hd"><div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><div class="hd-titulo">Turnera</div><div class="hd-sub" id="local-2">Aviso de pedido listo</div></div><div class="hd-paso">1 de 5</div></div>
   <div class="bd">
     <div class="titulo">Hoy.</div>
     <div class="card problema">
       <div class="card-tag rojo">El problema</div>
-      <div class="card-item" id="dolor-item-1"><span class="ico">✗</span><span class="txt rojo">Los clientes preguntan constantemente si ya está listo</span></div>
-      <div class="card-item"><span class="ico">✗</span><span class="txt rojo">El empleado para lo que hace para responder</span></div>
-      <div class="card-item"><span class="ico">✗</span><span class="txt rojo">El cliente no sabe cuándo volver</span></div>
-      <div class="card-item"><span class="ico">✗</span><span class="txt rojo">Hay que llamar uno por uno</span></div>
+      <div class="card-item" id="dolor-item-1"><span class="ico">&#x2717;</span><span class="txt rojo">Los clientes preguntan constantemente si ya está listo</span></div>
+      <div class="card-item"><span class="ico">&#x2717;</span><span class="txt rojo">El empleado deja de atender para responder</span></div>
+      <div class="card-item"><span class="ico">&#x2717;</span><span class="txt rojo">El cliente no sabe cuándo volver</span></div>
+      <div class="card-item"><span class="ico">&#x2717;</span><span class="txt rojo">Hay que llamar uno por uno</span></div>
     </div>
   </div>
-  <div class="ft">
-    <button class="btn-sig" onclick="ir('s3')">¿Cómo lo resuelve Turnera? →</button>
-    <button class="btn-vol" onclick="ir('s1')">Volver</button>
-  </div>
+  <div class="ft"><button class="btn-sig" onclick="ir('s3')">¿Cómo lo resuelve Turnera? →</button><button class="btn-vol" onclick="ir('s1')">Volver</button></div>
 </div>
 
-<!-- CON TURNERA -->
 <div class="screen" id="s3">
-  <div class="hd">
-    <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-    <div><div class="hd-titulo">Turnera</div><div class="hd-sub" id="local-3">Aviso de pedido listo</div></div>
-    <div class="hd-paso">2 de 5</div>
-  </div>
+  <div class="hd"><div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="hd-titulo">Turnera</div><div class="hd-sub" id="local-3">Aviso de pedido listo</div></div><div class="hd-paso">2 de 5</div></div>
   <div class="bd">
     <div class="titulo">Con Turnera.</div>
     <div class="card solucion">
       <div class="card-tag azul">La solución</div>
-      <div class="card-item"><span class="ico">✓</span><span class="txt azul">El cliente recibe su número al pedir</span></div>
-      <div class="card-item"><span class="ico">✓</span><span class="txt azul">Ve el estado y el tiempo estimado en su celular</span></div>
-      <div class="card-item"><span class="ico">✓</span><span class="txt azul">Recibe un aviso automático cuando está listo</span></div>
-      <div class="card-item"><span class="ico">✓</span><span class="txt azul">No pregunta. No hace falta llamarlo.</span></div>
+      <div class="card-item"><span class="ico">&#x2713;</span><span class="txt azul">El cliente recibe su número al pedir</span></div>
+      <div class="card-item"><span class="ico">&#x2713;</span><span class="txt azul">Ve el estado y el tiempo estimado en su celular</span></div>
+      <div class="card-item"><span class="ico">&#x2713;</span><span class="txt azul">Recibe un aviso automático cuando está listo</span></div>
+      <div class="card-item"><span class="ico">&#x2713;</span><span class="txt azul">No pregunta. No hace falta llamarlo.</span></div>
     </div>
   </div>
-  <div class="ft">
-    <button class="btn-sig" onclick="ir('s4')">¿Qué ve el cliente? →</button>
-    <button class="btn-vol" onclick="ir('s2')">Volver</button>
-  </div>
+  <div class="ft"><button class="btn-sig" onclick="ir('s4')">¿Qué ve el cliente? →</button><button class="btn-vol" onclick="ir('s2')">Volver</button></div>
 </div>
 
-<!-- PANTALLA DEL CLIENTE — ESPERANDO -->
 <div class="screen" id="s4">
-  <div class="hd">
-    <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-    <div><div class="hd-titulo">Turnera</div><div class="hd-sub" id="local-4">El cliente</div></div>
-    <div class="hd-paso">3 de 5</div>
-  </div>
+  <div class="hd"><div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="hd-titulo">Turnera</div><div class="hd-sub" id="local-4">El cliente</div></div><div class="hd-paso">3 de 5</div></div>
   <div class="bd">
     <div class="subtitulo">Esto es lo que ve el cliente en su celular mientras espera.</div>
-    <div class="ticket">
-      <div class="ticket-num">12</div>
-      <div class="ticket-lbl">tu número de pedido</div>
-    </div>
-    <div class="estado preparando">
-      <div class="estado-dot amber"></div>
-      <div>
-        <div class="estado-titulo amber">Preparando tu pedido</div>
-        <div class="estado-sub amber">No hace falta preguntar</div>
-      </div>
-    </div>
-    <div class="eta">
-      <div class="eta-lbl">Tiempo estimado</div>
-      <div class="eta-val">15 – 20 min</div>
-      <div class="eta-aprox">Tiempo aproximado · se actualiza en vivo</div>
-      <div class="eta-nota">Aprovechá el tiempo — te avisamos cuando esté listo.</div>
-    </div>
+    <div class="ticket"><div class="ticket-num">12</div><div class="ticket-lbl">tu número de pedido</div></div>
+    <div class="estado preparando"><div class="estado-dot amber"></div><div><div class="estado-titulo amber">Preparando tu pedido</div><div class="estado-sub amber">No hace falta preguntar</div></div></div>
+    <div class="eta"><div class="eta-lbl">Tiempo estimado</div><div class="eta-val">15 – 20 min</div><div class="eta-aprox">Tiempo aproximado · se actualiza en vivo</div><div class="eta-nota">Aprovechá el tiempo — te avisamos cuando esté listo.</div></div>
   </div>
-  <div class="ft">
-    <button class="btn-sig" onclick="ir('s5')">Le llega el aviso →</button>
-    <button class="btn-vol" onclick="ir('s3')">Volver</button>
-  </div>
+  <div class="ft"><button class="btn-sig" onclick="ir('s5')">Le llega el aviso →</button><button class="btn-vol" onclick="ir('s3')">Volver</button></div>
 </div>
 
-<!-- AVISO LISTO -->
 <div class="screen" id="s5">
-  <div class="hd">
-    <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-    <div><div class="hd-titulo">Turnera</div><div class="hd-sub">El aviso llega solo</div></div>
-    <div class="hd-paso">4 de 5</div>
-  </div>
+  <div class="hd"><div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div><div class="hd-titulo">Turnera</div><div class="hd-sub">El aviso llega solo</div></div><div class="hd-paso">4 de 5</div></div>
   <div class="bd">
     <div class="subtitulo">Cuando el pedido está listo, el sistema avisa al cliente. El negocio no llama a nadie.</div>
-    <div class="aviso">
-      <div class="aviso-icon">✅</div>
-      <div class="aviso-titulo">Tu pedido está listo</div>
-      <div class="aviso-sub">Número 12 — podés pasar a retirarlo.</div>
-      <button class="aviso-btn">Voy a retirarlo →</button>
-    </div>
-    <div class="pill">
-      <div class="pill-dot"></div>
-      <div class="pill-txt">El negocio no llamó a nadie. El sistema avisó solo.</div>
-    </div>
+    <div class="aviso"><div class="aviso-icon">&#x2705;</div><div class="aviso-titulo">Tu pedido está listo</div><div class="aviso-sub">Número 12 — podés pasar a retirarlo.</div><button class="aviso-btn">Voy a retirarlo →</button></div>
+    <div class="pill"><div class="pill-dot"></div><div class="pill-txt">El negocio no llamó a nadie. El sistema avisó solo.</div></div>
   </div>
-  <div class="ft">
-    <button class="btn-sig" onclick="ir('s6')">¿Cómo lo ve el negocio? →</button>
-    <button class="btn-vol" onclick="ir('s4')">Volver</button>
-  </div>
+  <div class="ft"><button class="btn-sig" onclick="ir('s6')">¿Cómo lo ve el negocio? →</button><button class="btn-vol" onclick="ir('s4')">Volver</button></div>
 </div>
 
-<!-- PANEL NEGOCIO -->
 <div class="screen" id="s6">
-  <div class="hd">
-    <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-    <div><div class="hd-titulo">Turnera</div><div class="hd-sub" id="local-6">Panel del negocio</div></div>
-    <div class="hd-paso">5 de 5</div>
-  </div>
+  <div class="hd"><div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="hd-titulo">Turnera</div><div class="hd-sub" id="local-6">Panel del negocio</div></div><div class="hd-paso">5 de 5</div></div>
   <div class="bd">
-    <div class="subtitulo">Todo el estado de los pedidos en una pantalla. El negocio marca cuándo está listo y el sistema avisa solo.</div>
-    <div class="panel-fila">
-      <div>
-        <div class="panel-num">Pedido 11</div>
-        <div class="panel-info">Hace 8 min</div>
-      </div>
-      <span class="badge preparando">Preparando</span>
-    </div>
-    <div class="panel-fila">
-      <div>
-        <div class="panel-num">Pedido 12</div>
-        <div class="panel-info">Cliente ya avisado ✓</div>
-      </div>
-      <span class="badge listo">Listo</span>
-    </div>
-    <div class="panel-fila">
-      <div>
-        <div class="panel-num">Pedido 10</div>
-        <div class="panel-info">Retirado</div>
-      </div>
-      <span class="badge entregado">Entregado</span>
-    </div>
+    <div class="subtitulo">Todo el estado de los pedidos en una pantalla. Marcás listo y el sistema avisa al cliente solo.</div>
+    <div class="panel-fila"><div><div class="panel-num">Pedido 11</div><div class="panel-info">Hace 8 min</div></div><span class="badge preparando">Preparando</span></div>
+    <div class="panel-fila"><div><div class="panel-num">Pedido 12</div><div class="panel-info">Cliente ya avisado &#x2713;</div></div><span class="badge listo">Listo</span></div>
+    <div class="panel-fila"><div><div class="panel-num">Pedido 10</div><div class="panel-info">Retirado</div></div><span class="badge entregado">Entregado</span></div>
     <button class="panel-btn">Marcar pedido 11 como listo →</button>
   </div>
+  <div class="ft"><button class="btn-sig" onclick="ir('s7')">¿Lo probarías? →</button><button class="btn-vol" onclick="ir('s5')">Volver</button></div>
+</div>
+
+<div class="screen" id="s7">
+  <div class="hd"><div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="hd-titulo">Turnera</div><div class="hd-sub">Aviso de pedido listo</div></div></div>
+  <div class="bd">
+    <div class="final-check"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <div class="final-titulo">Menos interrupciones.<br>Clientes informados.<br>Entregas ordenadas.</div>
+    <div class="final-sub" style="margin-bottom:16px;">Sin cambiar cómo trabajás.<br>Sin instalar nada extra.</div>
+    <div class="pregunta">¿Qué cambiarías para que realmente te sirva acá?</div>
+    <textarea class="respuesta" id="txt-respuesta" placeholder="Escribí acá..."></textarea>
+  </div>
   <div class="ft">
-    <button class="btn-sig" onclick="ir('s7')">¿Lo probarías? →</button>
-    <button class="btn-vol" onclick="ir('s5')">Volver</button>
+    <button class="btn-sig" onclick="enviar('Si, me interesa')">Sí, quiero probarlo 15 días →</button>
+    <button class="btn-vol" onclick="enviar('Necesito mas informacion')">Necesito más información</button>
+    <button class="btn-reiniciar" onclick="ir('s0')">Ver de nuevo</button>
   </div>
 </div>
 
-<!-- CIERRE -->
-<div class="screen" id="s7">
-  <div class="hd">
-    <div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-    <div><div class="hd-titulo">Turnera</div><div class="hd-sub">Aviso de pedido listo</div></div>
-  </div>
-  <div class="final-bd">
-    <div class="final-check">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div class="final-titulo">Menos interrupciones.<br>Clientes informados.<br>Entregas ordenadas.</div>
-    <div class="final-sub">Sin cambiar cómo trabajás.<br>Sin instalar nada extra.</div>
-    <div class="pregunta">Si lo probamos 15 días en tu negocio sin costo, ¿lo harías?</div>
-    <div class="pregunta2">¿Qué cambiarías para que realmente te sirva acá?</div>
-    <button class="btn-reiniciar" onclick="ir('s0')">Ver de nuevo</button>
+<div class="screen" id="s8">
+  <div class="hd"><div class="hd-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="hd-titulo">Turnera</div><div class="hd-sub">Gracias</div></div></div>
+  <div class="final-bd" style="text-align:center;">
+    <div style="font-size:56px;margin-bottom:20px;">&#x1F91C;</div>
+    <div class="final-titulo">¡Gracias!</div>
+    <div class="final-sub">Tu respuesta quedó guardada.<br>Leonardo te contacta en las próximas horas.</div>
+    <div style="background:var(--azul-lt);border-radius:16px;padding:20px;margin-top:24px;"><div style="font-size:15px;color:var(--azul);line-height:1.8;">turnera-digital.web.app<br>lcostucica@gmail.com<br>011 6731 3343</div></div>
   </div>
 </div>
 
@@ -350,34 +206,11 @@ var W="5491167313343";
 var DL={pregunta:"Los clientes preguntan constantemente",llama:"Hay que llamar por telefono",nombre:"Se llama por nombre y hay confusiones",retira:"No saben cuando venir a retirar"};
 var DT={pregunta:"Los clientes preguntan si ya esta listo. El empleado deja de atender para responder.",llama:"Hay que llamar a cada cliente por telefono para avisarle.",nombre:"Se llama por nombre y a veces hay confusiones.",retira:"El cliente no sabe cuando venir a retirar."};
 var EM={pregunta:["Tu cliente ya pidio.","Esta esperando.","","No sabe cuando estara listo.","","Y te pregunta."],llama:["Tu cliente ya pidio.","Esta esperando.","","Vos tenes que llamarlo","para avisarle."],nombre:["Tu cliente ya pidio.","Esta esperando.","","Lo llamas por nombre.","No escucha.","Y el pedido queda ahi."],retira:["Tu cliente ya pidio.","Esta esperando.","","No sabe cuando volver.","Viene antes.","O viene tarde."]};
-function iniciar(){
-  _n=document.getElementById("inp-nombre").value.trim()||"Tu negocio";
-  var z=document.getElementById("inp-zona").value.trim();
-  var d=document.getElementById("sel-dolor").value;
-  _dl=DL[d];
-  var loc=_n+(z?" · "+z:"");
-  ["local-2","local-3","local-4","local-6"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=loc;});
-  var txt=document.getElementById("txt-emocional");
-  var ls=EM[d],h="";
-  for(var i=0;i<ls.length;i++){var l=ls[i];if(l===""){h+="<br>";continue;}h+=(i===ls.length-1)?"<strong>"+l+"</strong>":l+"<br>";}
-  txt.innerHTML=h;
-  document.getElementById("dolor-item-1").innerHTML="<span class='ico'>&#x2717;</span><span class='txt rojo'>"+DT[d]+"</span>";
-  ir("s1");
-}
-function enviar(q){
-  var r=document.getElementById("txt-respuesta").value.trim()||"(sin comentario)";
-  var p=new URLSearchParams({"entry.333432293":_n,"entry.97779645":"Otro","entry.891579392":_dl,"entry.2098720063":r,"entry.1810345489":q});
-  new Image().src=F+"?"+p.toString();
-  var m="Hola Leonardo! Vi la demo de Turnera.%0A%0A*Negocio:* "+encodeURIComponent(_n)+"%0A*Problema:* "+encodeURIComponent(_dl)+"%0A*Que cambiaria:* "+encodeURIComponent(r)+"%0A*Piloto:* "+encodeURIComponent(q);
-  window.open("https://wa.me/"+W+"?text="+m,"_blank");
-  ir("s8");
-}
+function iniciar(){_n=document.getElementById("inp-nombre").value.trim()||"Tu negocio";var z=document.getElementById("inp-zona").value.trim();var d=document.getElementById("sel-dolor").value;_dl=DL[d];var loc=_n+(z?" · "+z:"");["local-2","local-3","local-4","local-6"].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent=loc;});var txt=document.getElementById("txt-emocional");var ls=EM[d],h="";for(var i=0;i<ls.length;i++){var l=ls[i];if(l===""){h+="<br>";continue;}h+=(i===ls.length-1)?"<strong>"+l+"</strong>":l+"<br>";}txt.innerHTML=h;document.getElementById("dolor-item-1").innerHTML="<span class='ico'>&#x2717;</span><span class='txt rojo'>"+DT[d]+"</span>";ir("s1");}
+function enviar(q){var r=document.getElementById("txt-respuesta").value.trim()||"(sin comentario)";var p=new URLSearchParams({"entry.333432293":_n,"entry.97779645":"Otro","entry.891579392":_dl,"entry.2098720063":r,"entry.1810345489":q});new Image().src=F+"?"+p.toString();var m="Hola Leonardo! Vi la demo de Turnera.%0A%0A*Negocio:* "+encodeURIComponent(_n)+"%0A*Problema:* "+encodeURIComponent(_dl)+"%0A*Que cambiaria:* "+encodeURIComponent(r)+"%0A*Piloto:* "+encodeURIComponent(q);window.open("https://wa.me/"+W+"?text="+m,"_blank");ir("s8");}
 function ir(id){document.querySelectorAll(".screen").forEach(function(s){s.classList.remove("active");});var e=document.getElementById(id);if(e)e.classList.add("active");window.scrollTo(0,0);}
-document.addEventListener("DOMContentLoaded",function(){
-  var a=document.getElementById("inp-nombre");if(a)a.addEventListener("keypress",function(e){if(e.key==="Enter")document.getElementById("inp-zona").focus();});
-  var b=document.getElementById("inp-zona");if(b)b.addEventListener("keypress",function(e){if(e.key==="Enter")iniciar();});
-});
+document.getElementById("inp-nombre").addEventListener("keypress",function(e){if(e.key==="Enter")document.getElementById("inp-zona").focus();});
+document.getElementById("inp-zona").addEventListener("keypress",function(e){if(e.key==="Enter")iniciar();});
 </script>
-
 </body>
 </html>
